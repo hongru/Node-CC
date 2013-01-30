@@ -1,4 +1,4 @@
-##### NodeCC
+# NodeCC
 
 compress & combo js files
 
