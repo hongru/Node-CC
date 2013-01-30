@@ -1,6 +1,6 @@
-===== NodeCC =====
+##### NodeCC
 
 compress & combo js files
 
-=== Usage ===
+### Usage
 - need '.nodecc' file to config
