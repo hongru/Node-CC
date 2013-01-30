@@ -1,0 +1,18 @@
+{
+  "name": "nodecc",
+  "version": "0.0.1",
+  "description": "compress & combo js files",
+  "main": "./src/nodecc.js",
+  "bin": {
+    "nodecc": "./src/nodecc.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "nodecc"
+  ],
+  "author": "hongru.chen",
+  "license": "BSD"
+}
