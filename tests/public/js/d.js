@@ -1,0 +1,1 @@
+function dd(){return alert(dd)}

@@ -1,0 +1,21 @@
+{
+    "encode": "utf8",
+    "cc": [
+        {
+            "source": "tests/test.js",
+            "target": "tests/test.min.js"
+        },
+        {
+            "source": "tests/js/",
+            "target": "tests/public/js/"
+        },
+        {
+            "source": [
+                "!|tests/licence.js",
+                "tests/a.js",
+                "tests/b.js"
+            ],
+            "target": "test/public/js/ab.js"
+        }
+    ]
+}
