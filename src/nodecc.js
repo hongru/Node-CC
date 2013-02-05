@@ -13,6 +13,7 @@ var fs = require('fs'),
 var VERSION = '0.0.0',
     ENCODE = 'utf8',
     PKG_CON,
+    PWD = './',
     NODECC_CON;
     
 
@@ -114,7 +115,7 @@ function writeToFile(path, str) {
 function f2f(from, to) {
     to = to || from;
     // check path
-    var dirpath = to.substring(0, to.lastIndexOf('/'));
+    var dirpath = path.dirname ? path.dirname(to) : to.substring(0, to.lastIndexOf('/'));
     !fs.existsSync(dirpath) && mkdirpSync(dirpath);
     
     var ccode = compressByUglify(from);
@@ -124,9 +125,12 @@ function f2f(from, to) {
 }
 
 function readNodecc() {
-    var ncc = './.nodecc';
+    var absP = path.resolve('./', PWD);
+    util.print('nodecc active in "'+ PWD +'"['+ absP +']\n\n');
+    
+    var ncc = PWD + '.nodecc';
     if (!fs.existsSync(ncc)) {
-        util.error('file [.nodecc] not found!');
+        util.error('file [.nodecc] not found in ['+ absP +']!');
         process.exit(1);
     }
     
@@ -163,6 +167,9 @@ function dealCClist () {
                 }
             } else if (typeof sPath == 'object' && sPath.forEach) {
                 fs.existsSync(tPath) && fs.unlinkSync(tPath);
+                var dirpath = path.dirname ? path.dirname(tPath) : tPath.substring(0, tPath.lastIndexOf('/'));
+                !fs.existsSync(dirpath) && mkdirpSync(dirpath);
+    
                 util.puts('merging...');
                 
                 var fd = fs.openSync(tPath, 'a', 0666);
@@ -180,9 +187,9 @@ function dealCClist () {
                     }
                 });
                 fs.closeSync(fd);
-                fs.writeFileSync(tPath, fd.toString(), ENCODE);
                 
                 util.puts('SUCCESS: ' + sPath + ' => ' + tPath);
+                
             }
         }
     });
@@ -200,6 +207,7 @@ function main (args) {
                     util.print('version ' + VERSION);
                     process.exit(0);
                 default:
+                    PWD = v;
                     break;
             }
         }
@@ -208,10 +216,6 @@ function main (args) {
     readNodecc();
     dealCClist();
 }
-
-//tests
-//f2f('./tests/a.js', './tests/a.min.js');
-//readNodecc();
 
 //exports
 if (require.main === module) {
